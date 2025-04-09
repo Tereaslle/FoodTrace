@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'FoodTrace.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.mysql',       # 使用mysql
         'NAME': 'FoodTrace',  # 数据库名字
         'USER': 'root',
         'PASSWORD': 'Zhaowentao.1',
