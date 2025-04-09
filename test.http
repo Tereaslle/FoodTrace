@@ -1,0 +1,18 @@
+GET http://127.0.0.1:8000/esp32/add/ HTTP/1.1
+###
+POST http://192.168.205.114:8000/esp32/add/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "deviceID": 1,
+  "userID": 1,
+  "foodID": "1",
+  "batchID": "1",
+  "enterpriseID": "1"
+}
+
+###
+GET http://192.168.205.114:8000/esp32/validate/food/?nid=2 HTTP/1.1
+
+
+###

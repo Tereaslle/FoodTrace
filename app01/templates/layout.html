@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="食品溯源管理系统"/>
+    <title>食品溯源管理系统</title>
+    <link rel="icon" href="{% static 'img/icon-title.jpg' %}" sizes="16x16">
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-5.3.0-alpha1-dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/all.js' %}" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+            class="fa fa-list fa-2x"></i></button>
+    <a class="navbar-brand ps-2" style="width: 180px">食品溯源管理系统</a>
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                   aria-describedby="btnNavbarSearch"/>
+            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+                <i class="fa fa-user"></i>
+                你好！{{ request.session.info.name }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item">权限类别:{{ request.session.info.type_name }}</a></li>
+                <li><a class="dropdown-item" href="#!">设置</a></li>
+                <li><a class="dropdown-item" href="/user/{{ request.session.info.id }}/edit/">我的信息</a></li>
+                <li>
+                    <hr class="dropdown-divider"/>
+                </li>
+                <li><a class="dropdown-item" href="/logout/">注销</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div id="layoutSidenav">
+    <!--侧边导航栏-->
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">基础信息管理</div>
+                    {% if request.session.info.type_num == 0 %}
+                        <a class="nav-link" href="/enterprise/list/">
+                            <div class="sb-nav-link-icon"><i class='fa-sharp fa-building' style='color:#ebebeb'></i>
+                            </div>
+                            企业信息管理
+                        </a>
+                    {% endif %}
+                    <a class="nav-link" href="/user/list/">
+                        <div class="sb-nav-link-icon"><i class='fa-solid fa-id-badge' style='color:#ebebeb'></i></div>
+                        用户信息管理
+                    </a>
+                    <a class="nav-link" href="/food/list/">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tree" style='color:#ebebeb'></i></div>
+                        食品信息管理
+                    </a>
+                    <a class="nav-link" href="/device/list/">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-laptop" style='color:#ebebeb'></i></div>
+                        设备信息管理
+                    </a>
+                    <div class="sb-sidenav-menu-heading">溯源相关功能</div>
+                    <a class="nav-link collapsed" href="#collapseTrace" data-bs-toggle="collapse"
+                       data-bs-target="#collapseTrace">
+                        <div class="sb-nav-link-icon"><i class="fa fa-calendar" style='color:#ebebeb'></i></div>
+                        溯源信息管理
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-chevron-down" style='color:#ebebeb'></i>
+                        </div>
+                    </a>
+                    <!--溯源信息管理的下拉框-->
+                    <div class="collapse" id="collapseTrace">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/foodbatch/list/">批次信息</a>
+                            <a class="nav-link" href="/flowrecord/list/">周转记录</a>
+                            <a class="nav-link" href="/singlefood/list/">食品零售单位信息</a>
+                            <a class="nav-link" href="/material/list/">原材料关联信息</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link" href="/operation/list/">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-address-book" style='color:#ebebeb'></i>
+                        </div>
+                        操作记录
+                    </a>
+                    <a class="nav-link" href="/trace/info/">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-truck" style='color:#ebebeb'></i></div>
+                        溯源信息展示
+                    </a>
+                    {#                    <div class="sb-sidenav-menu-heading">可视化管理</div>#}
+                    {#                    <a class="nav-link" href="#">#}
+                    {#                        <div class="sb-nav-link-icon"><i class="fas fa-map" style='color:#ebebeb'></i></div>#}
+                    {#                        地图#}
+                    {#                    </a>#}
+                    {#                    <a class="nav-link" href="#">#}
+                    {#                        <div class="sb-nav-link-icon"><i class="fas fa-magnet" style='color:#ebebeb'></i></div>#}
+                    {#                        综合查询#}
+                    {#                    </a>#}
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div id="layoutSidenav_content">
+        <main style='margin-top: 30px'>
+            <div class="container-fluid px-4 ">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; FoodTrace Website 2023</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>&middot;<a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+{% if messages %}
+    <script>
+        {% for msg in messages %}
+            alert('消息类型:{{ msg.tags }}\n内容:{{ msg.message }}');
+        {% endfor %}
+    </script>
+{% endif %}
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+{#<script src="{% static 'plugins/bootstrap-5.3.0-alpha1-dist/js/bootstrap.js' %}"></script>#}
+<script src="{% static 'plugins/bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.js' %}"
+        crossorigin="anonymous"></script>
+<!--隐藏/显示侧边栏-->
+<script>
+    window.addEventListener('DOMContentLoaded', event => {
+        // Toggle the side navigation
+        const sidebarToggle = document.body.querySelector('#sidebarToggle');
+        if (sidebarToggle) {
+            // Uncomment Below to persist sidebar toggle between refreshes
+            // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+            //     document.body.classList.toggle('sb-sidenav-toggled');
+            // }
+            sidebarToggle.addEventListener('click', event => {
+                event.preventDefault();
+                document.body.classList.toggle('sb-sidenav-toggled');
+                localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+            });
+        }
+
+    });
+</script>
+{% block js %}{% endblock %}
+</body>
+</html>

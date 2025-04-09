@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="card mb-4">
+        <!-- Default panel contents -->
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            {{ table_title }}信息表
+            <div style="display: inline-block;margin-left: 15px;">
+                <a class="btn btn-primary btn-sm" href="/enterprise/add/">
+                    <i class="fa-solid fa-plus"></i>
+                    新建
+                </a>
+            </div>
+            <div style="width: 270px;position:absolute;top:4px;right:10px;display: inline-block;">
+                <form method="get">
+                    <div class="input-group mb-3">
+                        <input type="text" name="q" class="form-control" placeholder="按{{ table_title }}名模糊查询"
+                               aria-label="按{{ table_title }}名模糊查询" aria-describedby="按{{ table_title }}名模糊查询">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                            <i class='fas fa-magnifying-glass' style="color: #0f0f0f;"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Table -->
+        <div class="card-body">
+            <table class="table table-striped table-hover table-sm" style="table-layout: fixed;">
+                <thead>
+                <tr>
+                    <th width="50px">企业ID</th>
+                    <th width="170px">企业名称</th>
+                    <th width="74px">企业类别</th>
+                    <th width="150px">社会信用代码</th>
+                    <th width="100px">食品生产许可证编号</th>
+                    <th width="150px">企业地址</th>
+                    <th width="105px">成立日期</th>
+                    <th width="50px">备注</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in queryset %}
+                    <tr>
+                        <td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ obj.enterpriseID }}</td>
+                        <td title="{{ obj.name }}"style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ obj.name }}</td>
+                        <td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ obj.get_type_display }}</td>
+                        <td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" title="{{ obj.organization_code }}">{{ obj.organization_code }}</td>
+                        <td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" title="{{ obj.permission_code }}">{{ obj.permission_code }}</td>
+                        <td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" title="{{ obj.address }}">{{ obj.address }}</td>
+                        <td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ obj.create_time|date:"Y-m-d" }}</td>
+                        <td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" title="{{ obj.notes }}">{{ obj.notes }}</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="/enterprise/{{ obj.enterpriseID }}/edit/">编辑</a>
+                            <a class="btn btn-danger btn-sm"
+                               href="/enterprise/delete/?nid={{ obj.enterpriseID }}">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {{ page_string }}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}

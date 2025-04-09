@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>{{ method }}{{ table_title }}信息</h5>
+        </div>
+        <div class="card-body">
+            <form method="post" novalidate>{#novalidate是关闭浏览器校验#}
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="form-group">
+                        <label>{{ field.label }}</label>
+                        {{ field }}
+                        <span style="color: red;">{{ field.errors.0 }}</span>
+                        {#field.errors.0是拿第0个错误#}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">提 交</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js %}
+<script src="{% static 'plugins/date/jedate/jedate.js' %}"></script>
+{% if table_title == "食品批次" %}
+<script type="text/javascript">
+    jeDate({
+        dateCell: "#id_manufactureDate",
+        format: "YYYY-MM-DD", //控制是否显示小时
+    });
+    jeDate({
+        dateCell: "#id_expireDate",
+        format: "YYYY-MM-DD", //控制是否显示小时
+    });
+</script>
+{% elif table_title == "企业" or table_title == "食品" %}
+ <script type="text/javascript">
+    jeDate({
+        dateCell: "#id_create_time",
+        format: "YYYY-MM-DD", //控制是否显示小时
+    });
+</script>
+{% endif %}
+{% endblock %}

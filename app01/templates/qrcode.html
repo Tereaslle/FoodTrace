@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="card mb-auto">
+        <div class="card-header">
+            <i class="fas fa-truck"></i>
+            食品溯源信息
+            <div style="width: 270px;height:40px;position:relative;right:0px;display: inline-block;">
+                <form method="get">
+                    <div class="input-group">
+                        <input type="text" name="nid" class="form-control" placeholder="按{{ search_info }}模糊查询"
+                               aria-label="按{{ search_info }}名模糊查询" aria-describedby="按{{ search_info }}模糊查询">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                            <i class='fas fa-magnifying-glass' style="color: #0f0f0f;"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Table -->
+        <div class="card-body">
+            <div class="container-md">
+                <div class=" row gx-5">
+                    <div class="col-md-auto">
+                        <div class="container-md">
+                            <div class="row gx-5">
+                                <div class="text-center">
+                                    <span>扫一扫获取溯源信息</span>
+                                </div>
+                            </div>
+                            <div class="row gx-5">
+                                <div class="col-md-auto">
+                                    <img src="/trace/qrcode/?nid={{ batchid }}" style="width: 250px">
+                                </div>
+                            </div>
+                            <div class="row gx-5" style="display: inline-block;">
+                                <!-- 模态弹框触发按钮 -->
+                                <div class="container-md">
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">
+                                        防伪码
+                                    </button>
+                                </div>
+
+                                <!-- 模态弹框框体 -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                    食品防伪二维码</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <img src="/trace/security/qrcode/?nid={{ traceid }}"
+                                                     style="width: 250px">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 模态弹框框体 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-auto">
+                        <div class="container-md">
+                            <div class="row gx-5">
+                                <div class="col-md-auto">
+                                    <table class="table table-striped table-hover table-sm">
+                                        <thead>
+                                        <tr>
+                                            {% for item in table_head %}
+                                                <th>{{ item }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in trace_info_dict.values %}
+                                            <tr>
+                                                <td>{{ item.flowID }}</td>
+                                                <td>{{ item.food_name }}</td>
+                                                <td>{{ item.batchID }}</td>
+                                                <td>{{ item.user_name }}</td>
+                                                <td>{{ item.device_name }}</td>
+                                                <td>{{ item.target_enterprise_name }}</td>
+                                                <td>{{ item.record_datetime }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

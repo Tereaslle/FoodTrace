@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="card mb-4">
+        <!-- Default panel contents -->
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            {{ table_title }}信息表
+            <div style="display: inline-block;margin-left: 15px;">
+                <a class="btn btn-primary btn-sm" href="/operation/add/">
+                    <i class="fa-solid fa-plus"></i>
+                    新建
+                </a>
+            </div>
+            <div style="width: 270px;position:absolute;top:4px;right:10px;display: inline-block;">
+                <form method="get">
+                    <div class="input-group mb-3">
+                        <input type="text" name="q" class="form-control" placeholder="按{{ search_info }}模糊查询"
+                               aria-label="按{{ search_info }}名模糊查询" aria-describedby="按{{ search_info }}模糊查询">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                            <i class='fas fa-magnifying-glass' style="color: #0f0f0f;"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Table -->
+        <div class="card-body">
+            <table class="table table-striped table-hover table-sm">
+                <thead>
+                <tr>
+                    {% for item in table_head %}
+                        <th>{{ item }}</th>
+                    {% endfor %}
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in queryset %}
+                    <tr>
+                        <td>{{ obj.operateID }}</td>
+                        <td>{{ obj.userID }}</td>
+                        <td>{{ obj.deviceID }}</td>
+                        <td>{{ obj.operate_datetime|date:"Y-m-d H:i:s" }}</td>
+                        <td>{{ obj.notes }}</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="/operation/{{ obj.operateID }}/edit/">编辑</a>
+                            <a class="btn btn-danger btn-sm" href="/operation/delete/?nid={{ obj.operateID }}">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {{ page_string }}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
