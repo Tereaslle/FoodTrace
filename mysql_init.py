@@ -15,7 +15,7 @@ def create_mysql_table():
         if connection.is_connected():
             cursor = connection.cursor()
 
-            # 创建表的SQL语句
+            # 创建表的SQL语句，这里三个引号不是注释，而是未赋值的多行字符串
             create_table_query = """
             CREATE TABLE IF NOT EXISTS employees (
                 id INT AUTO_INCREMENT PRIMARY KEY,
